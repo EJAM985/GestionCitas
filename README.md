@@ -1,2 +1,2 @@
 # GestionCitas
-Web de Administración de pacientes usando TileWind CSS LocalStorage en Vite
+Web de Administración de clientes usando TileWind CSS LocalStorage en Vite
