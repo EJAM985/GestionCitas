@@ -1,5 +1,7 @@
 import {useState, useEffect} from "react";
 import {Toaster, toast} from 'react-hot-toast';
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
 
@@ -56,19 +58,39 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
       const pacientesActualizados = pacientes.map( pacientesState => pacientesState.id ===
         paciente.id ? objetoPaciente : pacientesState)
 
-      setPacientes(pacientesActualizados);
-      setPaciente({});
-
-      toast.success('Cliente Editado!')
-      
-    }
-    else{
-      //Nuevo Registro
-      objetoPaciente.id = generateID();
-      setPacientes(pacientes => [...pacientes, objetoPaciente]);
-      toast.success('Paciente Agregado!');
-    }
-
+      Swal.fire({
+        title: `¿Quieres editar los siguientes datos?`,
+        text: `Actualizarás los datos de ${paciente.nombre}`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: 'rgb(59 130 246)',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Edítalo!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            setPacientes(pacientesActualizados); //Se actualiza el cliente editado
+            toast.success('Cliente Editado!')
+            
+            Swal.fire(
+              'Editado!',
+              'Se han editado los datos correctamente',
+              'success'
+              )
+            } 
+          })
+          
+          setPaciente({});
+          
+          
+          
+        }
+        else{
+          //Nuevo Registro
+          objetoPaciente.id = generateID();
+          setPacientes(pacientes => [...pacientes, objetoPaciente]);
+          toast.success('Cliente Agregado!');
+        }
+        
     //Resetear el Formulario
     setNombre('');
     setPropietario('');
@@ -80,11 +102,11 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
   return (
     <div className="md:w-1/2 lg:w-2/5 mb-10">
       <Toaster/>
-      <h2 className="font-black text-xl text-center">Seguimiento Pacientes</h2>
+      <h2 className="font-black text-xl text-center">Seguimiento Clientes</h2>
 
       <p className="text-lg mt-5 text-center mb-10">
         Añade Pacientes y {''} 
-        <span className="text-indigo-600 font-bold">Administralos</span>
+        <span className="text-blue-500 font-bold">Administralos</span>
       </p>
 
       <form 
@@ -92,26 +114,26 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
         className="max-w-md mx-auto p-6 bg-slate-100 rounded-lg shadow-lg">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nombreMascota">
-            Nombre Mascota:
+            Nombre:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="nombreMascota"
             type="text"
-            placeholder="Nombre de la mascota"
+            placeholder="Nombre del cliente . . ."
             value={nombre}
             onChange={ (e) => setNombre(e.target.value) }
           />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="propietario">
-            Propietario:
+            Nombre de la empresa:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="propietario"
             type="text"
-            placeholder="Nombre del propietario"
+            placeholder="Nombre de la empresa . . ."
             value={propietario}
             onChange={ (e) => setPropietario(e.target.value) }
           />
@@ -124,7 +146,7 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="email"
-            placeholder="e-mail"
+            placeholder="e-mail . . ."
             value={email}
             onChange={ (e) => setEmail(e.target.value) }
           />
@@ -148,7 +170,7 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
           <textarea
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="datosAdicionales"
-            placeholder="Añade datos adicionales"
+            placeholder="Añade datos adicionales . . ."
             value={datosAdicionales}
             onChange={ (e) => setDatosAdicionales(e.target.value) }
           ></textarea>
@@ -157,7 +179,7 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
           type="submit"    
           className={ paciente.id ? "bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded w-full" 
           : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"}
-          value={ paciente.id ? 'Editar Paciente' : 'Agregar Paciente'}
+          value={ paciente.id ? 'Editar Cliente' : 'Agregar Cliente'}
         />
       </form>
     </div>

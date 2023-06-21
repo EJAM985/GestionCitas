@@ -1,12 +1,17 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Formulario from "./components/Formulario"
 import Header from "./components/Header"
 import ListadoPacientes from "./components/ListadoPacientes"
 
 function App() {
 
-  const [pacientes, setPacientes] = useState([]);
+  const [pacientes, setPacientes] = useState(JSON.parse(localStorage.getItem('pacientes')) ?? []);
   const [paciente, setPaciente] = useState({});
+
+  //Local Storage
+  useEffect( () => {
+    localStorage.setItem('pacientes', JSON.stringify( pacientes ));
+  }, [pacientes] )
 
   //Funcion para eliminar un paciente de la BD a partir de su ID
   const eliminarPaciente = id => {

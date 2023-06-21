@@ -1,17 +1,16 @@
 import Paciente from "./Paciente";
 
 const ListadoPacientes = ({pacientes, setPaciente, eliminarPaciente}) => {
-
+  
   return (
     <div className="md:w-1/2 lg:w-3/5">
-
       {pacientes && pacientes.length ? (
         <>
-          <h2 className="font-black text-xl text-center">ListadoPacientes</h2>
+          <h2 className="font-black text-xl text-center">Listado de Clientes</h2>
 
           <p className="text-lg mt-5 text-center mb-10">
             Administra tus {''}
-            <span className="text-indigo-600 font-bold">Pacientes y Citas</span>
+            <span className="text-blue-500 font-bold">Clientes y Citas</span>
           </p>
 
 
@@ -39,7 +38,7 @@ const ListadoPacientes = ({pacientes, setPaciente, eliminarPaciente}) => {
 
           <p className="text-lg mt-5 text-center mb-10">
             Añádelos con el  {''}
-            <span className="text-indigo-600 font-bold">Formulario</span>
+            <span className="text-blue-500 font-bold">Formulario</span>
           </p>
 
         </>
