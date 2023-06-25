@@ -1,6 +1,6 @@
 import Paciente from "./Paciente";
 
-const ListadoPacientes = ({pacientes, setPaciente, eliminarPaciente}) => {
+const ListadoPacientes = ({pacientes, setPaciente, eliminarPaciente, checkDeleteButton, setCheckDeleteButton}) => {
   
   return (
     <div className="md:w-1/2 lg:w-3/5">
@@ -23,6 +23,8 @@ const ListadoPacientes = ({pacientes, setPaciente, eliminarPaciente}) => {
                   paciente={paciente}
                   setPaciente={setPaciente}
                   eliminarPaciente={eliminarPaciente}
+                  checkDeleteButton={checkDeleteButton}
+                  setCheckDeleteButton={setCheckDeleteButton}
                 />
             
             ))}   

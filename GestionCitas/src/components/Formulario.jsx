@@ -3,7 +3,7 @@ import {Toaster, toast} from 'react-hot-toast';
 import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
+const Formulario = ({pacientes, setPacientes, paciente, setPaciente, setCheckDeleteButton}) => {
 
   const [nombre, setNombre] = useState('');
   const [propietario, setPropietario] = useState('');
@@ -68,7 +68,8 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
         confirmButtonText: 'Si, Edítalo!'
       }).then((result) => {
         if (result.isConfirmed) {
-            setPacientes(pacientesActualizados); //Se actualiza el cliente editado
+            setPacientes(pacientesActualizados); //Se actualiza el cliente editado        
+            setCheckDeleteButton(false);
             toast.success('Cliente Editado!')
             
             Swal.fire(
@@ -78,7 +79,6 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
               )
             } 
           })
-          
           setPaciente({});
           
           
@@ -91,6 +91,8 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
           toast.success('Cliente Agregado!');
         }
         
+    setCheckDeleteButton(false);
+
     //Resetear el Formulario
     setNombre('');
     setPropietario('');
@@ -105,7 +107,7 @@ const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
       <h2 className="font-black text-xl text-center">Seguimiento Clientes</h2>
 
       <p className="text-lg mt-5 text-center mb-10">
-        Añade Pacientes y {''} 
+        Añade Clientes y {''} 
         <span className="text-blue-500 font-bold">Administralos</span>
       </p>
 

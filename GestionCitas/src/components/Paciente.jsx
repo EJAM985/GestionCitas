@@ -1,33 +1,43 @@
+import {Toaster, toast} from 'react-hot-toast';
 import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-const Paciente = ({paciente, setPaciente, eliminarPaciente}) => {
+const Paciente = ({paciente, setPaciente, eliminarPaciente, checkDeleteButton, setCheckDeleteButton}) => {
 
     const {nombre, propietario, email, fecha, datosAdicionales, id} = paciente
 
     const handleEliminar = ({nombre}) => {
-        Swal.fire({
-            title: `¿Quieres eliminar a ${nombre}?`,
-            text: "Esta acción no se puede revertir!",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: 'rgb(59 130 246)',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminalo!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                eliminarPaciente(id);  //llamar el prop y enviar el id
-                Swal.fire(
-                'Eliminado!',
-                'El cliente ha sido eliminado correctamente',
-                'success'
-                )
-            }
-        })
+        if(!checkDeleteButton)
+        {
+            Swal.fire({
+                title: `¿Quieres eliminar a ${nombre}?`,
+                text: "Esta acción no se puede revertir!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: 'rgb(59 130 246)',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminalo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    eliminarPaciente(id);  //llamar el prop y envia el id
+                    setCheckDeleteButton(false);
+                    Swal.fire(
+                    'Eliminado!',
+                    'El cliente ha sido eliminado correctamente',
+                    'success'
+                    )
+                }
+            })
+        }
+        else
+        {
+            toast.error('No puedes eliminar un cliente mientras estás editando!');
+        }
     }
 
     return (
         <div className="w-full mx-auto p-6 bg-slate-100 rounded-lg shadow-lg mb-5 flex">
+            <Toaster/>
             <div className="h-full w-4/5">
                 <p className="text-gray-700 text-sm font-bold mb-2 uppercase">
                     Nombre: {''}
@@ -54,7 +64,7 @@ const Paciente = ({paciente, setPaciente, eliminarPaciente}) => {
                 <button 
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded-xl shadow mb-3" 
                     type="button"
-                    onClick={ () => setPaciente(paciente) }
+                    onClick={ () => { setPaciente(paciente); setCheckDeleteButton(true); }}
                 >Editar</button>
 
                 <button 
